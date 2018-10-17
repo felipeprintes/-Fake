@@ -11,8 +11,9 @@ import scrapy
 class Lenotg1Item(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    url = scrapy.Field()
-    title = scrapy.Field()
-    resumo = scrapy.Field()
-    links = scrapy.Field()
+    #url = scrapy.Field()
+    #title_resumo = scrapy.Field()
+    #resumo = scrapy.Field()
+    #title = scrapy.Field()
+    #links = scrapy.Field()
     tags = scrapy.Field()
