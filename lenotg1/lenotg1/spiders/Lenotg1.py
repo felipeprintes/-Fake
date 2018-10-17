@@ -15,11 +15,11 @@ class Lenotg1Spider(scrapy.Spider):
         for i in urls:
             yield response.follow(i, self.parse_article)
 
-        """
-    	next_page = response.xpath("//*[@id='feed-placeholder']/div/div/div[3]/a").extract_first()
-    	if next_page is not None:
-    		yield response.follow(next_page, self.parse_article)
-		"""
+        
+        next_page = response.xpath("//*[@id='feed-placeholder']/div/div/div[3]/a/@href").extract_first()
+        if next_page is not None:
+            yield response.follow(next_page, self.parse)
+		
     def parse_article(self, response):
     
     	# titulos = Lenotg1Item( {
@@ -36,8 +36,11 @@ class Lenotg1Spider(scrapy.Spider):
     	# return titulos
        
         tags = self.to_str(response.xpath("//ul[@class='entities__list']//li//text()"))
-
-        titulos = Lenotg1Item(tags = tags)
+        title = self.to_str(response.xpath("//h1[@class='content-head__title']//text()"))
+        resumo = self.to_str(response.xpath("//h2[@class='content-head__subtitle']//text()"))
+        
+        titulos = Lenotg1Item(tags = tags, title = title, resumo = resumo)
         yield titulos
+
     def to_str(self, element):
-        return "\¬".join(element.extract())
+        return ";".join(element.extract())
